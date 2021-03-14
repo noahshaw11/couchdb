@@ -47,6 +47,11 @@ handle_welcome_req(#httpd{method='GET'}=Req, WelcomeMessage) ->
         {couchdb, WelcomeMessage},
         {version, list_to_binary(couch_server:get_version())},
         {git_sha, list_to_binary(couch_server:get_git_sha())},
+        {erlang_verison, ?l2b(?COUCHDB_ERLANG_VERSION)},
+        {javascript_engine, {[
+            {name, <<"spidermonkey">>},
+            {version, couch_server:get_spidermonkey_version()}
+        ]}},
         {uuid, couch_server:get_uuid()},
         {features, get_features()}
         ] ++ case config:get("vendor") of
